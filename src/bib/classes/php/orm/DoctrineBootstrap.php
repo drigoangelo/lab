@@ -58,6 +58,8 @@ class DoctrineBootstrap {
              */
             if (defined('DOCTRINE_PROXY_DIR') === TRUE) {
                 $config->setProxyDir(DOCTRINE_PROXY_DIR);
+                #$logger = new \Doctrine\DBAL\Logging\EchoSQLLogger();
+                #$config->setSQLLogger($logger);
             }
             $entityManager = EntityManager::create($dbParams, $config);
 

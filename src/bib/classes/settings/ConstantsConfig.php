@@ -13,13 +13,12 @@ class ConstantsConfig {
     private function defineConstantesLocal() {
         define("URL", Util::urlAutomatica(true));
 
-        define("CONFIG_HOST", 'localhost');
-        define("CONFIG_PORTA", '3306');
-        define("CONFIG_DBNAME", 'lab2');
-//        define("CONFIG_DBNAME", 'laboratoriovirtual_ufu_cliente');
-        define("CONFIG_USER", 'lab2');
-        define("CONFIG_PASSWORD", 'vBRHDoVdpUe6VTHNyyN9m8KL');
-        define("CONFIG_CHARSET", 'utf8');
+        define("CONFIG_HOST", getenv("MYSQL_HOST"));
+        define("CONFIG_PORTA", getenv("MYSQL_PORT"));
+        define("CONFIG_DBNAME", getenv("MYSQL_DATABASE"));
+        define("CONFIG_USER", getenv("MYSQL_USER"));
+        define("CONFIG_PASSWORD", getenv("MYSQL_PASSWORD"));
+        define("CONFIG_CHARSET", getenv("MYSQL_CHARSET"));
 
         # email
         define("EMAIL_USERNAME", "labvirtual@ileel.ufu.br");
@@ -31,26 +30,26 @@ class ConstantsConfig {
         define("LOCAL_CAMERA", "/home/html/facialRecognitionLogin");
     }
 
-    private function defineConstantesProducao() {
-        define("URL", "http://" . $_SERVER['SERVER_NAME'] . "/");
+    // private function defineConstantesProducao() {
+    //     define("URL", "http://" . $_SERVER['SERVER_NAME'] . "/");
 
-        define("CONFIG_HOST", 'localhost');
-        define("CONFIG_PORTA", '3306');
-        define("CONFIG_DBNAME", '');
-        define("CONFIG_USER", '');
-        define("CONFIG_PASSWORD", '');
-        define("CONFIG_CHARSET", 'utf8');
+    //     define("CONFIG_HOST", 'localhost');
+    //     define("CONFIG_PORTA", '3306');
+    //     define("CONFIG_DBNAME", '');
+    //     define("CONFIG_USER", '');
+    //     define("CONFIG_PASSWORD", '');
+    //     define("CONFIG_CHARSET", 'utf8');
 
-        # email
-	define("EMAIL_USERNAME", "labvirtual@ileel.ufu.br");
-	define("EMAIL_PASSWORD", "lab2018virtual");
-        define("EMAIL_CHARSET", "UTF-8");
-        define("EMAIL_PORTA", "587");
-	define("EMAIL_CRIPTOGRAFIA", "tls");
+    //     # email
+    //     define("EMAIL_USERNAME", "labvirtual@ileel.ufu.br");
+    //     define("EMAIL_PASSWORD", "lab2018virtual");
+    //     define("EMAIL_CHARSET", "UTF-8");
+    //     define("EMAIL_PORTA", "587");
+    //     define("EMAIL_CRIPTOGRAFIA", "tls");
 
-	define("SMTP_HOST", "smtp.ufu.br"); # se tiver
-        define("LOCAL_CAMERA", "/home/html/facialRecognitionLogin");
-    }
+    //     define("SMTP_HOST", "smtp.ufu.br"); # se tiver
+    //     define("LOCAL_CAMERA", "/home/html/facialRecognitionLogin");
+    // }
 
 }
 
