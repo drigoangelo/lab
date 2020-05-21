@@ -7,4 +7,3 @@ docker/lab-webserver/logs
 docker/lab-webserver/facialRecognitionLogin
 
 src/upload/
-db/data_backup/dump_conteudo_arquivo.sql
