@@ -1,17 +1,9 @@
 # Laboratório virtual
 
-### GIT LFS
-
-Este repositório está utilizando [Large File Storage](https://git-lfs.github.com/). Antes de baixar o repositório é necessário instalar o LFS conforme instruções [nesse link](https://git-lfs.github.com/). Após a instalação do LFS basta usar o git normalmente que os arquivos grandes (administrados pelo LFS) serão atualizados automaticamente.
-
----
-
 ### Configuração do ambiente:
 
 * Variável que define se está em ambiente de produção: 
 arquivo `src/bib/classes/settings/Config.php` variável `$isProducao`.
-
-* Idealmente, a senha de acesso ao banco de dados será individual: cada desenvolvedor terá a sua, e a do banco de dados de produção será definida apenas pelo administrador do servidor de produção. Ainda estamos ajustando para essa forma de trabalho, então, por enquanto, será necessária a atualização de alguns arquivos e tomar cuidado para que cada desenvolvedor não faça commit da sua senha particular.
 
 * Para definir a senha do mysql, criar um arquivo chamado `.env` com as seguintes definições, substituindo a palavra senha pela respectiva senha, e alterando possíveis configurações locais.
 
@@ -53,9 +45,22 @@ Unix:
 mkdir -p docker/{lab-mysql/mysql,lab-webserver/{facialRecognitionLogin,logs}}
 ```
 
-
-* Para iniciar a aplicação, executar o comando `docker-compose up` no terminal, a partir do diretório raiz do projeto (o diretório que contém o arquivo `docker-compose.yml`). O sistema pode ser acessado navegando para `localhost/lab`.
-
 * Após iniciar o sistema pela primeira vez, é necessário executar os scripts de inicialização do banco de dados. Esse script fará o INSERT dos dados necessários para que a aplicação funcione. Para executar esse script, seguir as orientações do [arquivo de inicizlização do banco de dados](db/data_backup/README.md).
+
+---
+
+### Inicialização:
+
+Para subir o sistema, executar em um terminal, à partir do diretório no qual se encontra este projeto, o seguinte comando:
+`docker-compose up`
+
+Esse comando irá criar (caso necessário) e inicializar as imagens do apache e mysql. 
+
+
+* Para acessar o laboratório, acessar a URL `localhost/lab`. Após realizar o cadastro, é necessário acessar a plataforma de administração para ativá-lo.
+
+* O painel de amdministração está no caminho `localhost/lab/admin`. Nos scripts de inicialização do banco de dados é criado um usuário de desenvolvimento: Usuário: `admin`, senha: `321321`.
+
+* O banco de dados pode ser acessado no host `localhost`, porta `3306`, usuário `lab2` e senha definida no arquivo [.env](.env)
 
 ---
