@@ -57,9 +57,9 @@ Para subir o sistema, executar em um terminal, à partir do diretório no qual s
 Esse comando irá criar (caso necessário) e inicializar as imagens do apache e mysql. 
 
 
-* Para acessar o laboratório, acessar a URL `localhost/lab`. Após realizar o cadastro, é necessário acessar a plataforma de administração para ativá-lo.
+* Para acessar o laboratório, acessar a URL [localhost/lab](http://localhost/lab). Após realizar o cadastro, é necessário acessar a plataforma de administração para ativá-lo.
 
-* O painel de amdministração está no caminho `localhost/lab/admin`. Nos scripts de inicialização do banco de dados é criado um usuário de desenvolvimento: Usuário: `admin`, senha: `321321`.
+* O painel de amdministração está no caminho [localhost/lab/admin](http://localhost/lab/admin). Nos scripts de inicialização do banco de dados é criado um usuário de desenvolvimento: Usuário: `admin`, senha: `321321`.
 
 * O banco de dados pode ser acessado no host `localhost`, porta `3306`, usuário `lab2` e senha definida no arquivo [.env](.env)
 
