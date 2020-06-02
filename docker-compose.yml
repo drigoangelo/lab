@@ -5,9 +5,9 @@ services:
         image: mysql:5.7
         container_name: lab-mysql
         working_dir: /application
-        command: --init-file /application/db/db.sql --character-set-server=${MYSQL_CHARSET} --collation-server=utf8_general_ci --max_allowed_packet=1000000000 --net_buffer_length=1000000000
+        command: --init-file /application/db/db.sql --character-set-server=${MYSQL_CHARSET} --collation-server=utf8_general_ci --max_allowed_packet=1000000000 --net_buffer_length=1000000000 --innodb_use_native_aio=0
         volumes:
-            - .:/application
+            - ./db:/application/db
             - ./docker/lab-mysql/mysql:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}

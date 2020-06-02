@@ -3,10 +3,6 @@ FROM php:7.2-apache
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Configuracoes do php e apache
-COPY ./apache2 /etc/apache2/
-COPY ./configphp/php.ini $PHP_INI_DIR
-
 RUN apt-get update -q; \
 	apt-get install -y --no-install-recommends \
 		libfreetype6-dev \
@@ -50,3 +46,7 @@ RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
 	docker-php-ext-install opcache && \
 	a2enmod rewrite && \
 	service apache2 restart
+
+# Configuracoes do php e apache
+COPY ./apache2 /etc/apache2/
+COPY ./configphp/php.ini $PHP_INI_DIR
