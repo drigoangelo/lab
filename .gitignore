@@ -7,3 +7,8 @@ docker/lab-webserver/logs
 docker/lab-webserver/facialRecognitionLogin
 
 src/upload/
+
+*.code-workspace
+
+*.log
+
