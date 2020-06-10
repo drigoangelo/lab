@@ -7,3 +7,4 @@ docker/lab-webserver/logs
 docker/lab-webserver/facialRecognitionLogin
 
 src/upload/
+.vscode/launch.json
