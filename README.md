@@ -64,3 +64,5 @@ Esse comando irá criar (caso necessário) e inicializar as imagens do apache e 
 * O banco de dados pode ser acessado no host `localhost`, porta `3306`, usuário `lab2` e senha definida no arquivo [.env](.env)
 
 ---
+
+teste git
