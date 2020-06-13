@@ -607,16 +607,14 @@ class AtividadeAction extends AtividadeActionParent {
         $oAlunoAtividade = $oAlunoAtividadeTipoAction->select($oAluno->getId(), array('id'));
         $request_at = new Request();
         $request_at->set('aluno_id', $oAluno->getId());
-        $request_at->set('atividade_id', (int) $id);
         $request_at->set('tipo', $tipo);
         $request_at->set('valor', join(';', $dados));
-      
+        $request_at->set('adeId', (int) $id);
+        
         if (!$oAlunoAtividade)
             $oAlunoAtividadeTipoEnviosAction->add($request_at, true);
         else
-            $oAlunoAtividadeTipoAction->edit($request_at, true);
-        
-            
+            $oAlunoAtividadeTipoAction->edit($request_at, true);   
         return true;
         
     }
