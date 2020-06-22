@@ -150,7 +150,7 @@ class AlunoAction extends AlunoActionParent {
 
     public function solicitaRecuperaSenhaSubmit($request) {
         try {
-            $oUsuario = $this->selectByEmail($request->get("email"));
+            $oUsuario = $this->selectByEmail($request->get("email-recuperacao"));
         } catch (Exception $e) {
             throw new Exception(Lang::SISTEMA_recuperarSenhaValidaEmail);
         }
@@ -407,10 +407,10 @@ class AlunoAction extends AlunoActionParent {
     }
 
     public function validateSolicitaRecuperaSenha(&$request) {
-        if ($request->get("email") == '') {
+        if ($request->get("email-recuperacao") == '') {
             throw new Exception(Lang::SISTEMA_validaEmail);
         }
-        if (!Util::validaEmail($request->get("email"))) {
+        if (!Util::validaEmail($request->get("email-recuperacao"))) {
             throw new Exception(Lang::SISTEMA_validaEmailValido);
         }
 
