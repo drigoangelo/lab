@@ -154,9 +154,6 @@ class PortalController {
     public function solicitaRecuperaSenhaSubmit() {
         $this->setAllFixo();
 
-        if (!$this->authPortal())
-            return $this->view;
-
         $oAlunoAction = new AlunoAction();
         try {
             $oAlunoAction->validateSolicitaRecuperaSenha($this->request, $this->response);
@@ -170,9 +167,6 @@ class PortalController {
 
     public function recuperarSenha() {
         $this->setAllFixo();
-
-        if (!$this->authPortal())
-            return $this->view;
 
         $oAlunoAction = new AlunoAction();
         try {
@@ -188,15 +182,11 @@ class PortalController {
 
     public function recuperarSenhaSubmit() {
         $this->setAllFixo();
-
-        if (!$this->authPortal())
-            return $this->view;
-
         $oAlunoAction = new AlunoAction();
         try {
             $oAlunoAction->validateRecuperarSenhaHash($this->request, $this->response);
             $oAlunoAction->validaterRecuperarSenha($this->request);
-            $oAlunoAction->trocarSenha($this->request);
+            
         } catch (Exception $e) {
             return new View($e->getMessage(), $this->response, 'print');
         }
