@@ -15,6 +15,8 @@ MYSQL_PORT=3306
 MYSQL_USER=lab2
 MYSQL_DATABASE=lab2
 MYSQL_CHARSET=utf8
+DEBUG=TRUE
+XDEBUG_HOST=host.docker.internal
 ```
 
 * Configuração de banco de dados e email:
