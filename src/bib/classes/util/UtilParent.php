@@ -899,11 +899,6 @@ class UtilParent {
 	public static function mailSystem($mailTitle, $mailContent, $aEmail, $smtp = false, $vArquivo = null) {
         ### $aEmail = array(email => nome); mas pode ser somente: $aEmail = array(email)        
         
-        if (in_array(CONFIG_HOST, array("192.168.1.4"))) {
-            # se não tiver publicado nao envia e-mail
-//            return true;
-        }
-
         try {
             # validando
             if (!$mailTitle) {
