@@ -18,7 +18,11 @@ services:
             - "8082:3306"
     
     webserver:
-        build: ./docker/lab-webserver/
+        build: 
+            context: ./docker/lab-webserver/
+            args: 
+                - DEBUG=${DEBUG}
+                - XDEBUG_HOST=${XDEBUG_HOST}
         container_name: lab-webserver
         hostname: lab-webserver
         environment:
