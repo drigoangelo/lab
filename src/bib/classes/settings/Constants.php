@@ -22,9 +22,8 @@ class Constants {
         define("NO_SELECTED_MSG", "Nenhum registro selecionado!"); // global para valores não selecionados
         define("FIRST_ACESS_MSG", "Não é o primeiro acesso do sistema!"); // retorno caso não seja o primeiro acesso
 
-
-        define("RECAPTCHA_PUBLIC_KEY", "6LeaOngUAAAAALxkL4GIxcUejVre7ax0LiKsa1Bh"); // pro captcha
-        define("RECAPTCHA_PRIVATE_KEY", "6LeaOngUAAAAAH4eauVz2EgQlJVTnppQJCGhNaxe"); // pro challenge
+        define("RECAPTCHA_PUBLIC_KEY", "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"); // pro captcha
+        define("RECAPTCHA_PRIVATE_KEY", "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"); // pro challenge
     }
 
     private function defineMessageConstants() {

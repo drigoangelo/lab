@@ -282,6 +282,59 @@ if($order == 'Tema') {
         return $oAtividade;
     }
 
+
+    function debug() {
+        global $is_dev;
+        $is_dev=true;
+        if ($is_dev) {
+            $debug_arr = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            $line = $debug_arr[0]['line'];
+            $file = $debug_arr[0]['file'];
+
+            header('Content-Type: text/plain');
+
+            echo "linha: $line\n";
+            echo "arquivo: $file\n\n";
+            print_r(array('GET' => $_GET, 'POST' => $_POST, 'SERVER' => $_SERVER));
+            exit;
+        }
+    }
+    public function alteraTipo($id, $commitable = true, $doLog = true, $tipo) {
+        echo $tipo;
+        debug();
+
+        $qb = $this->em->createQueryBuilder();
+        $where = QueryHelper::getAndEquals(array('o.id' => $id), $qb);
+        $query = $qb->update("Atividade o")
+            ->set('o.tipo', "$tipo")
+            ->where( $where )->getQuery();
+        
+        try {
+            if ($commitable) {
+                $this->em->beginTransaction();
+            }
+            $this->delTransaction($id);
+            $query->execute();
+			
+			if($doLog){
+                ## LOG BEGIN ##
+                $oLog = new LogAction($this->em);
+                $oLog->register("O", "Excluído Atividade com o índice {$id}", FALSE);
+                ## LOG END ##
+			}
+			
+            if ($commitable) {
+                $this->em->commit();
+            }
+        } catch (Exception $e) {
+            if ($commitable) {
+                $this->em->rollback();
+            }
+            throw $e;
+        }
+        return true;
+    }
+
     public function delLogical($id, $commitable = true, $doLog = true) {
         /* @var $query \Doctrine\ORM\QueryBuilder */
 
@@ -299,11 +352,10 @@ if($order == 'Tema') {
             $query->execute();
 			
 			if($doLog){
-				
-            ## LOG BEGIN ##
-            $oLog = new LogAction($this->em);
-            $oLog->register("O", "Excluído Atividade com o índice {$id}", FALSE);
-            ## LOG END ##
+                ## LOG BEGIN ##
+                $oLog = new LogAction($this->em);
+                $oLog->register("O", "Excluído Atividade com o índice {$id}", FALSE);
+                ## LOG END ##
 			}
 			
             if ($commitable) {
