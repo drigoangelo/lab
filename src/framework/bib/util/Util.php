@@ -29,8 +29,10 @@ class Util extends UtilParent {
                         eval("\$o = \$obj->get{$classe}();");
                         $aObj = $action->toArray($o);
                         foreach ($aFieldToSet as $field) {
-                            $field_input = $aDado[$field];
-                            $aObj[$field] = $field_input;
+                            if ( array_key_exists($field, $aDado) ) {
+                                $field_input = $aDado[$field];
+                                $aObj[$field] = $field_input;
+                            }
                         }
 //                        $aRet["{$o->getId()}_{$idIdioma}"] = $action->toObject($aObj);
                         $aRet[] = $action->toObject($aObj);
