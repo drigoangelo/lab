@@ -98,17 +98,52 @@ if(isset($aFieldsStructure["titulo"]) && !isset($aFieldsStructure["titulo"]["isF
 
     protected function addTransaction($oAtividade, $request){
     }
+    public function apagaTipo(){
+        return true; // deleção lógica pode deixar
+        // apaga os idiomas
+       
+        
+        $qb = $this->em->createQueryBuilder();
+        $where = QueryHelper::getAndEquals(array('o.Atividade' => $id), $qb);
+        $qb->delete()->from("AtividadeIdioma", "o")->where($where)->getQuery()->execute();
 
+        // apaga as opções
+        $qb = $this->em->createQueryBuilder();
+        $where = QueryHelper::getAndEquals(array('o.Atividade' => $id), $qb);
+        $qb->delete()->from("AtividadeOpcao", "o")->where($where)->getQuery()->execute();
+
+        // apaga os arquivos das colunas
+//       $qb = $this->em->createQueryBuilder();
+//       $where = QueryHelper::getAndEquals(array('u.Atividade' => $id), $qb);
+//       $qb->delete()->from("AtividadeColunaArquivo", "o")->leftJoin('o.AtividadeColuna', 'u')->where($where)->getQuery()->execute();
+
+        $oAtividadeColunaAction = new AtividadeColunaAction($this->em);
+        $aAtividadeColuna = $oAtividadeColunaAction->collection(array("id"), "o.Atividade = '{$id}'");
+        if ($aAtividadeColuna) {
+            $oAtividadeColunaArquivoAction = new AtividadeColunaArquivoAction($this->em);
+            foreach ($aAtividadeColuna as $oAtividadeColuna) {
+                $oAtividadeColunaArquivoAction->delPhysicalByAtividadeColuna($oAtividadeColuna["id"], false);
+            }
+        }
+
+        // apaga as colunas
+        $qb = $this->em->createQueryBuilder();
+        $where = QueryHelper::getAndEquals(array('o.Atividade' => $id), $qb);
+        $qb->delete()->from("AtividadeColuna", "o")->where($where)->getQuery()->execute();
+        
+    }
     public function edit($request, $commitable = true, $returnObject = false, $doLog = true) {
         foreach ($request->getParameters() as $i => $v) 
             $$i = $v;
         
         $oAtividade = $this->em->find('Atividade',array('id' => $id));
         $oAtividade->setTema(QueryHelper::verifyObject($Tema, 'Tema', $this->em));
-	$oAtividade->setTitulo($titulo);
-	$oAtividade->setDescricao($descricao);
-	$oAtividade->setOrdem($ordem);
-	
+        $oAtividade->setTitulo($titulo);
+        $oAtividade->setDescricao($descricao);
+        $oAtividade->setOrdem($ordem);
+        $oAtividade->setTipo($tipo);
+
+        $this->apagaTipo();
 
         try {
             if ($commitable) {
