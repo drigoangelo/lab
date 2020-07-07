@@ -99,11 +99,12 @@ if(isset($aFieldsStructure["titulo"]) && !isset($aFieldsStructure["titulo"]["isF
     protected function addTransaction($oAtividade, $request){
     }
     public function apagaTipo(){
-        return true; // deleção lógica pode deixar
+       // return true; // deleção lógica pode deixar
         // apaga os idiomas
        
         
         $qb = $this->em->createQueryBuilder();
+        
         $where = QueryHelper::getAndEquals(array('o.Atividade' => $id), $qb);
         $qb->delete()->from("AtividadeIdioma", "o")->where($where)->getQuery()->execute();
 
@@ -113,9 +114,9 @@ if(isset($aFieldsStructure["titulo"]) && !isset($aFieldsStructure["titulo"]["isF
         $qb->delete()->from("AtividadeOpcao", "o")->where($where)->getQuery()->execute();
 
         // apaga os arquivos das colunas
-//       $qb = $this->em->createQueryBuilder();
-//       $where = QueryHelper::getAndEquals(array('u.Atividade' => $id), $qb);
-//       $qb->delete()->from("AtividadeColunaArquivo", "o")->leftJoin('o.AtividadeColuna', 'u')->where($where)->getQuery()->execute();
+        // $qb = $this->em->createQueryBuilder();
+        // $where = QueryHelper::getAndEquals(array('u.Atividade' => $id), $qb);
+        // $qb->delete()->from("AtividadeColunaArquivo", "o")->leftJoin('o.AtividadeColuna', 'u')->where($where)->getQuery()->execute();
 
         $oAtividadeColunaAction = new AtividadeColunaAction($this->em);
         $aAtividadeColuna = $oAtividadeColunaAction->collection(array("id"), "o.Atividade = '{$id}'");
@@ -132,6 +133,8 @@ if(isset($aFieldsStructure["titulo"]) && !isset($aFieldsStructure["titulo"]["isF
         $qb->delete()->from("AtividadeColuna", "o")->where($where)->getQuery()->execute();
         
     }
+
+
     public function edit($request, $commitable = true, $returnObject = false, $doLog = true) {
         foreach ($request->getParameters() as $i => $v) 
             $$i = $v;
@@ -143,7 +146,7 @@ if(isset($aFieldsStructure["titulo"]) && !isset($aFieldsStructure["titulo"]["isF
         $oAtividade->setOrdem($ordem);
         $oAtividade->setTipo($tipo);
 
-        $this->apagaTipo();
+        //$this->apagaTipo();
 
         try {
             if ($commitable) {
@@ -335,8 +338,6 @@ if($order == 'Tema') {
         }
     }
     public function alteraTipo($id, $commitable = true, $doLog = true, $tipo) {
-        echo $tipo;
-        debug();
 
         $qb = $this->em->createQueryBuilder();
         $where = QueryHelper::getAndEquals(array('o.id' => $id), $qb);

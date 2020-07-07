@@ -2,7 +2,7 @@ var countConteudo = 0;
 
 function AtividadeSubmitHandler(botao, redirect) {
     console.log(botao);
-    
+
     var form = botao.form;
     var defaultValue = botao.value;
     var options = {
@@ -10,12 +10,12 @@ function AtividadeSubmitHandler(botao, redirect) {
         data: {
             'ajaxRequest': true
         },
-        beforeSubmit: function (formData, jqForm, options) {
+        beforeSubmit: function(formData, jqForm, options) {
             return ajaxBeforeSend(botao);
         },
-        success: function (serverResponse) {
+        success: function(serverResponse) {
             alert(botao.form);
-            
+
             if (serverResponse == 'OK') {
                 if (redirect) {
                     eqRedirectTimeout(URL_APP + MODULO_NAME + '/Atividade/admFilter?MESSAGE_TYPE=1&MESSAGE_CODE=1&Tema=' + $('#Tema').val());
@@ -42,10 +42,10 @@ function AtividadeEditHandler(botao, redirect) {
         data: {
             'ajaxRequest': true
         },
-        beforeSubmit: function (formData, jqForm, options) {
+        beforeSubmit: function(formData, jqForm, options) {
             return ajaxBeforeSend(botao);
         },
-        success: function (serverResponse) {
+        success: function(serverResponse) {
             if (serverResponse == 'OK') {
                 if (redirect) {
                     eqRedirectTimeout(URL_APP + MODULO_NAME + '/Atividade/admFilter?MESSAGE_TYPE=1&MESSAGE_CODE=2&Tema=' + $('#Tema').val());
@@ -75,8 +75,7 @@ function AtividadeDeleteHandler(action) {
  */
 function uniqueId() {
     return 'id-' + Math.random().toString(36).substr(2, 16);
-}
-;
+};
 
 function AtividadeAdicionarConteudo() {
     var div = $('#Atividade-conteudo-model').children('.conteudo-model-form').clone();
@@ -88,13 +87,18 @@ function AtividadeAdicionarConteudo() {
     $('#Atividade-conteudo-append').append(div);
     countConteudo++;
 }
+
 function EditarAposCriacao() {
-    
-    $.ajax({url: "../../actionparent/AtividadeActionParent.php",  success: function(result){
-        $("#div1").html(result);
-    }});
-        
+
+    $.ajax({
+        url: "../../actionparent/AtividadeActionParent.php",
+        success: function(result) {
+            $("#div1").html(result);
+        }
+    });
+
 }
+
 function AtividadeOnChangeTituloConteudo(e) {
     $($(e).data('id')).html(e.value);
 }
@@ -104,7 +108,7 @@ function AtividadeAdicionarOpcao() {
     $('#Atividade-opcao-append').append($clone.show());
 
     $i = 0;
-    $('#atividade-opcao').find('.check').each(function () {
+    $('#atividade-opcao').find('.check').each(function() {
         $(this).val($i);
         $i++;
     });
@@ -135,13 +139,13 @@ function AtividadeSelecionaTipoFormulario(tipo, object, clear) {
 
         $cl.appendTo($conteudo.find('.opcao-conteudo'));
         $i = 0;
-        $conteudo.find('.check-conteudo').each(function () {
+        $conteudo.find('.check-conteudo').each(function() {
             $(this).val($i);
             $(this).attr('name', 'opcaoConteudoCorreta[' + conteudo_atual + '][]');
             $i++;
         });
 
-        $conteudo.find('.valor-conteudo').each(function () {
+        $conteudo.find('.valor-conteudo').each(function() {
             $(this).attr('name', 'valorConteudo[' + conteudo_atual + '][]');
             $i++;
         });
@@ -156,13 +160,13 @@ function AtividadeSelecionaTipoFormulario(tipo, object, clear) {
 
 function AtividadeRecontarConteudo() {
     $count = 1;
-    $('.conteudo-model-form').each(function () {
+    $('.conteudo-model-form').each(function() {
         $conteudo = $(this);
-        $conteudo.find('.check-conteudo').each(function () {
+        $conteudo.find('.check-conteudo').each(function() {
             $(this).attr('name', 'opcaoConteudoCorreta[' + $count + '][]');
         });
 
-        $conteudo.find('.valor-conteudo').each(function () {
+        $conteudo.find('.valor-conteudo').each(function() {
             $(this).attr('name', 'valorConteudo[' + $count + '][]');
         });
         $count++;
@@ -170,13 +174,14 @@ function AtividadeRecontarConteudo() {
 }
 
 var countColuna = 0;
+
 function AtividadeAdicionarColuna(aIdIdioma) {
     countColuna = $('#coluna').val();
 
     countColuna++; // o controle é para todos os IDIOMAS - ENTAO SE ADICIONAR UM VAI PARA TODOS, SE APAGAR UM APAGA TODOS DAQUELA POSICAO
     $('#coluna').val(countColuna);
     var aIdioma = aIdIdioma.split("_"); // para cada idioma
-    $('.Atividade-coluna-append').each(function (i) {
+    $('.Atividade-coluna-append').each(function(i) {
         $clone = $('#Atividade-coluna-model').children('div.row').clone();
         $($clone).attr("rel", "div_coluna_" + countColuna);
         $($clone).find(".numero_coluna").html(countColuna);

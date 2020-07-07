@@ -144,18 +144,21 @@ if(isset($aFieldsStructure["tipo2"]) && !isset($aFieldsStructure["tipo2"]["isFk"
     public function edit($request, $commitable = true, $returnObject = false, $doLog = true) {
         foreach ($request->getParameters() as $i => $v) 
             $$i = $v;
-        
-        $oAtividadeColuna = $this->em->find('AtividadeColuna',array('id' => $id));
-        $oAtividadeColuna->setIdioma(QueryHelper::verifyObject($Idioma, 'Idioma', $this->em));
-	$oAtividadeColuna->setAtividade(QueryHelper::verifyObject($Atividade, 'Atividade', $this->em));
-	$oAtividadeColuna->setColuna1($coluna1);
-	$oAtividadeColuna->setColuna2($coluna2);
-	$oAtividadeColuna->setTipo1($tipo1);
-	$oAtividadeColuna->setTipo2($tipo2);
-	$oAtividadeColuna->setColuna1Text($coluna1Text);
-	$oAtividadeColuna->setColuna2Text($coluna2Text);
-	
 
+       $oAtividadeColuna = $this->em->find('AtividadeColuna',array('id' => $id));
+        $oAtividadeColuna = new AtividadeColuna();
+        
+        $oAtividadeColuna->setId($id);
+        $oAtividadeColuna->setIdioma($Idioma);
+	    $oAtividadeColuna->setAtividade($Atividade);
+	    $oAtividadeColuna->setColuna1($coluna1);
+	    $oAtividadeColuna->setColuna2($coluna2);
+	    $oAtividadeColuna->setTipo1($tipo1);
+	    $oAtividadeColuna->setTipo2($tipo2);
+	    $oAtividadeColuna->setColuna1Text($coluna1Text);
+	    $oAtividadeColuna->setColuna2Text($coluna2Text);
+	
+        
         try {
             if ($commitable) {
                 $this->em->beginTransaction();
@@ -263,7 +266,7 @@ if(isset($aFieldsStructure["tipo2"]) && !isset($aFieldsStructure["tipo2"]["isFk"
                     $orderType = "ASC";
                 }
                 $entityPrefix = "o";
-if($order == 'Idioma') {
+                if($order == 'Idioma') {
                     $query->leftJoin('o.Idioma', 'u');
                     $entityPrefix = "u";
                     $order = 'titulo';
@@ -536,7 +539,7 @@ if($order == 'Idioma') {
 	
 	public static function getKeys($tipo = null) {
         # F- FieldName || A- AttributeName
-        @$aKeys = array('o.id' => $id); # @ pois poem as variaveis nao definidas e o importante é a chave
+        @$aKeys = array('o.id' => ''); # @ pois poem as variaveis nao definidas e o importante é a chave
         $aCamposId = array_keys($aKeys);
         $aRet = array();
         foreach ($aCamposId as $o) {

@@ -142,8 +142,6 @@ $o = $response->get("object");
                         <?php include("inc/Atividade.conteudo.php"); ?>
 
                         <footer>
-                        <button class="btn btn-primary" onclick="AtividadeSubmitHandler(this, false);" tabindex="<?= ++$tabindex ?>" ><i class="icon-check icon-white"></i> Salvar novo</button>
-                            <button class="btn btn-primary" onclick="AtividadeSubmitHandler(this, true);" tabindex="<?= ++$tabindex ?>" ><i class="icon-share icon-white"></i> Salvarnovo e Sair</button>
                             <button class="btn btn-primary" onclick="AtividadeEditHandler(this, false);" tabindex="<?= ++$tabindex ?>" ><i class="icon-check icon-white"></i> Salvar</button>
                             <button class="btn btn-primary" onclick="AtividadeEditHandler(this, true);" tabindex="<?= ++$tabindex ?>" ><i class="icon-share icon-white"></i> Salvar e Sair</button>
                             <button class="btn btn-warning" type="reset" tabindex="<?= ++$tabindex ?>" ><i class="icon-remove-circle icon-white"></i> Limpar</button>

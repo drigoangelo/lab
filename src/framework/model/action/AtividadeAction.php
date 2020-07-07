@@ -4,7 +4,7 @@ include_once(dirname(__FILE__) . '/../actionparent/AtividadeActionParent.php');
 
 class AtividadeAction extends AtividadeActionParent {
 
-    public function validate(&$request, $edicao = false) {
+    public function validate($request, $edicao = false) {
 //        Util::debug($request, false);
         # validação parent
         $validation = $this->validateParent($request, $edicao);
@@ -23,7 +23,7 @@ class AtividadeAction extends AtividadeActionParent {
             foreach ($aColunaTmp as $id_idioma => $oColuna) {
                 for ($i = 0; $i < count($oColuna["tipo1"]); $i++) {
                     $aColuna[$id_idioma]["coluna"][$i] = array(
-                        "id" => ($oColuna["id"] ? $oColuna["id"][$i] : 0),
+                        "id" => $request->get('id'),
                         "Idioma" => $id_idioma,
                         "coluna1" => $i + 1,
                         "coluna2" => $i + 1,
@@ -34,7 +34,7 @@ class AtividadeAction extends AtividadeActionParent {
                     );
                     # DUPLICAÇÃO PARA O INGLÊS
                     $aColuna[$id_ingles]["coluna"][$i] = array(
-                        "id" => ($oColuna["id"] ? $oColuna["id"][$i] : 0),
+                        "id" => $request->get('id'),
                         "Idioma" => $id_ingles,
                         "coluna1" => $i + 1,
                         "coluna2" => $i + 1,
@@ -127,8 +127,8 @@ class AtividadeAction extends AtividadeActionParent {
 
         // validando ao menos uma correta para os tipos: 
 //        $tituloConteudo = $edicao ? $request->get('tituloConteudoEdit') : $request->get('tituloConteudo');
-        $tituloConteudo = array_merge($request->get('tituloConteudoEdit'), $request->get('tituloConteudo'));
-        $tipoConteudo = array_merge($request->get('tipoConteudoEdit'), $request->get('tipoConteudo'));
+        $tituloConteudo = array($request->get('titulo'));
+        $tipoConteudo = array($request->get('tipo'));
         $aCorretas = array();
         $bValidaCorretas = false;
         if ($tituloConteudo) {
