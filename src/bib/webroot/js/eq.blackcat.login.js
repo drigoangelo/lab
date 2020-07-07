@@ -36,8 +36,10 @@ function eqLoginSubmitHandler(botao) {
 
 
 function eqSolicitaRecuperaSenhaSubmitHandler(botao) {
+    console.log("Funçao do admin aqui");
     var form = botao.form;
     $(form).serialize();
+    console.log(form);
     var options = {
         type: "POST",
         data: {

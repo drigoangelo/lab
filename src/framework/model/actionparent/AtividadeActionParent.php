@@ -98,17 +98,52 @@ if(isset($aFieldsStructure["titulo"]) && !isset($aFieldsStructure["titulo"]["isF
 
     protected function addTransaction($oAtividade, $request){
     }
+    public function apagaTipo(){
+        return true; // deleção lógica pode deixar
+        // apaga os idiomas
+       
+        
+        $qb = $this->em->createQueryBuilder();
+        $where = QueryHelper::getAndEquals(array('o.Atividade' => $id), $qb);
+        $qb->delete()->from("AtividadeIdioma", "o")->where($where)->getQuery()->execute();
 
+        // apaga as opções
+        $qb = $this->em->createQueryBuilder();
+        $where = QueryHelper::getAndEquals(array('o.Atividade' => $id), $qb);
+        $qb->delete()->from("AtividadeOpcao", "o")->where($where)->getQuery()->execute();
+
+        // apaga os arquivos das colunas
+//       $qb = $this->em->createQueryBuilder();
+//       $where = QueryHelper::getAndEquals(array('u.Atividade' => $id), $qb);
+//       $qb->delete()->from("AtividadeColunaArquivo", "o")->leftJoin('o.AtividadeColuna', 'u')->where($where)->getQuery()->execute();
+
+        $oAtividadeColunaAction = new AtividadeColunaAction($this->em);
+        $aAtividadeColuna = $oAtividadeColunaAction->collection(array("id"), "o.Atividade = '{$id}'");
+        if ($aAtividadeColuna) {
+            $oAtividadeColunaArquivoAction = new AtividadeColunaArquivoAction($this->em);
+            foreach ($aAtividadeColuna as $oAtividadeColuna) {
+                $oAtividadeColunaArquivoAction->delPhysicalByAtividadeColuna($oAtividadeColuna["id"], false);
+            }
+        }
+
+        // apaga as colunas
+        $qb = $this->em->createQueryBuilder();
+        $where = QueryHelper::getAndEquals(array('o.Atividade' => $id), $qb);
+        $qb->delete()->from("AtividadeColuna", "o")->where($where)->getQuery()->execute();
+        
+    }
     public function edit($request, $commitable = true, $returnObject = false, $doLog = true) {
         foreach ($request->getParameters() as $i => $v) 
             $$i = $v;
         
         $oAtividade = $this->em->find('Atividade',array('id' => $id));
         $oAtividade->setTema(QueryHelper::verifyObject($Tema, 'Tema', $this->em));
-	$oAtividade->setTitulo($titulo);
-	$oAtividade->setDescricao($descricao);
-	$oAtividade->setOrdem($ordem);
-	
+        $oAtividade->setTitulo($titulo);
+        $oAtividade->setDescricao($descricao);
+        $oAtividade->setOrdem($ordem);
+        $oAtividade->setTipo($tipo);
+
+        $this->apagaTipo();
 
         try {
             if ($commitable) {
@@ -282,6 +317,59 @@ if($order == 'Tema') {
         return $oAtividade;
     }
 
+
+    function debug() {
+        global $is_dev;
+        $is_dev=true;
+        if ($is_dev) {
+            $debug_arr = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            $line = $debug_arr[0]['line'];
+            $file = $debug_arr[0]['file'];
+
+            header('Content-Type: text/plain');
+
+            echo "linha: $line\n";
+            echo "arquivo: $file\n\n";
+            print_r(array('GET' => $_GET, 'POST' => $_POST, 'SERVER' => $_SERVER));
+            exit;
+        }
+    }
+    public function alteraTipo($id, $commitable = true, $doLog = true, $tipo) {
+        echo $tipo;
+        debug();
+
+        $qb = $this->em->createQueryBuilder();
+        $where = QueryHelper::getAndEquals(array('o.id' => $id), $qb);
+        $query = $qb->update("Atividade o")
+            ->set('o.tipo', "$tipo")
+            ->where( $where )->getQuery();
+        
+        try {
+            if ($commitable) {
+                $this->em->beginTransaction();
+            }
+            $this->delTransaction($id);
+            $query->execute();
+			
+			if($doLog){
+                ## LOG BEGIN ##
+                $oLog = new LogAction($this->em);
+                $oLog->register("O", "Excluído Atividade com o índice {$id}", FALSE);
+                ## LOG END ##
+			}
+			
+            if ($commitable) {
+                $this->em->commit();
+            }
+        } catch (Exception $e) {
+            if ($commitable) {
+                $this->em->rollback();
+            }
+            throw $e;
+        }
+        return true;
+    }
+
     public function delLogical($id, $commitable = true, $doLog = true) {
         /* @var $query \Doctrine\ORM\QueryBuilder */
 
@@ -299,11 +387,10 @@ if($order == 'Tema') {
             $query->execute();
 			
 			if($doLog){
-				
-            ## LOG BEGIN ##
-            $oLog = new LogAction($this->em);
-            $oLog->register("O", "Excluído Atividade com o índice {$id}", FALSE);
-            ## LOG END ##
+                ## LOG BEGIN ##
+                $oLog = new LogAction($this->em);
+                $oLog->register("O", "Excluído Atividade com o índice {$id}", FALSE);
+                ## LOG END ##
 			}
 			
             if ($commitable) {

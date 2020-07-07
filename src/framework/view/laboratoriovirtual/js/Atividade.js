@@ -1,6 +1,8 @@
 var countConteudo = 0;
 
 function AtividadeSubmitHandler(botao, redirect) {
+    console.log(botao);
+    
     var form = botao.form;
     var defaultValue = botao.value;
     var options = {
@@ -12,6 +14,8 @@ function AtividadeSubmitHandler(botao, redirect) {
             return ajaxBeforeSend(botao);
         },
         success: function (serverResponse) {
+            alert(botao.form);
+            
             if (serverResponse == 'OK') {
                 if (redirect) {
                     eqRedirectTimeout(URL_APP + MODULO_NAME + '/Atividade/admFilter?MESSAGE_TYPE=1&MESSAGE_CODE=1&Tema=' + $('#Tema').val());
@@ -84,7 +88,13 @@ function AtividadeAdicionarConteudo() {
     $('#Atividade-conteudo-append').append(div);
     countConteudo++;
 }
-
+function EditarAposCriacao() {
+    
+    $.ajax({url: "../../actionparent/AtividadeActionParent.php",  success: function(result){
+        $("#div1").html(result);
+    }});
+        
+}
 function AtividadeOnChangeTituloConteudo(e) {
     $($(e).data('id')).html(e.value);
 }
