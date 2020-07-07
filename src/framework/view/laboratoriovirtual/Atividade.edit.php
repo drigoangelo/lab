@@ -130,7 +130,7 @@ $o = $response->get("object");
                             <section>
                                 <label class="label" for="tipo">Tipo</label>
                                 <label class="input">
-                                    <?= AtividadeAction::getComboBoxForTipo(null, ( ++$tabindex), '-Selecione-', "onchange=AtividadeSelecionaTipo(this)"); ?>
+                                    <?= AtividadeAction::getComboBoxForTipo($o->getTipo(), ( ++$tabindex), '-Selecione-', "onchange=AtividadeSelecionaTipo(this)"); ?>
                                     
                                 </label>
                             </section>
