@@ -101,13 +101,13 @@ if(isset($aFieldsStructure["tipo2"]) && !isset($aFieldsStructure["tipo2"]["isFk"
         
         $oAtividadeColuna = new AtividadeColuna();
         $oAtividadeColuna->setIdioma(QueryHelper::verifyObject($Idioma, 'Idioma', $this->em));
-	$oAtividadeColuna->setAtividade(QueryHelper::verifyObject($Atividade, 'Atividade', $this->em));
-	$oAtividadeColuna->setColuna1($coluna1);
-	$oAtividadeColuna->setColuna2($coluna2);
-	$oAtividadeColuna->setTipo1($tipo1);
-	$oAtividadeColuna->setTipo2($tipo2);
-	$oAtividadeColuna->setColuna1Text($coluna1Text);
-	$oAtividadeColuna->setColuna2Text($coluna2Text);
+	    $oAtividadeColuna->setAtividade(QueryHelper::verifyObject($Atividade, 'Atividade', $this->em));
+	    $oAtividadeColuna->setColuna1($coluna1);
+	    $oAtividadeColuna->setColuna2($coluna2);
+	    $oAtividadeColuna->setTipo1($tipo1);
+	    $oAtividadeColuna->setTipo2($tipo2);
+	    $oAtividadeColuna->setColuna1Text($coluna1Text);
+	    $oAtividadeColuna->setColuna2Text($coluna2Text);
 	
         try {
             if ($commitable) {

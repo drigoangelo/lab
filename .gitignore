@@ -1,5 +1,5 @@
 .env
-
+.history
 src/framework/view/portal/i18n/langcache
 
 docker/lab-mysql/mysql
