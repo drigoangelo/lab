@@ -57,6 +57,7 @@ class AtividadeColuna {
     public function getIdioma() {
         return $this->Idioma;
     }
+    
     public function setIdioma($Idioma) {
         if($Idioma) {
         $this->Idioma = $Idioma;

@@ -23,7 +23,7 @@ class AtividadeAction extends AtividadeActionParent {
             foreach ($aColunaTmp as $id_idioma => $oColuna) {
                 for ($i = 0; $i < count($oColuna["tipo1"]); $i++) {
                     $aColuna[$id_idioma]["coluna"][$i] = array(
-                        "id" => $request->get('id'),
+                        "id" =>($oColuna["IMG1ID"][$i] ? $oColuna["IMG1ID"][$i] : 0),
                         "Idioma" => $id_idioma,
                         "coluna1" => $i + 1,
                         "coluna2" => $i + 1,
@@ -33,16 +33,16 @@ class AtividadeAction extends AtividadeActionParent {
                         "coluna2Text" => $oColuna["TEX2"][$i],
                     );
                     # DUPLICAÇÃO PARA O INGLÊS
-                    $aColuna[$id_ingles]["coluna"][$i] = array(
-                        "id" => $request->get('id'),
-                        "Idioma" => $id_ingles,
-                        "coluna1" => $i + 1,
-                        "coluna2" => $i + 1,
-                        "tipo1" => ($tipo1 = $oColuna["tipo1"][$i]),
-                        "tipo2" => ($tipo2 = $oColuna["tipo2"][$i]),
-                        "coluna1Text" => $oColuna["TEX1"][$i],
-                        "coluna2Text" => $oColuna["TEX2"][$i],
-                    );
+                    // $aColuna[$id_ingles]["coluna"][$i] = array(
+                    //     "id" => ($oColuna["IMG2ID"][$i] ? $oColuna["IMG2ID"][$i] : 0),
+                    //     "Idioma" => $id_ingles,
+                    //     "coluna1" => $i + 1,
+                    //     "coluna2" => $i + 1,
+                    //     "tipo1" => ($tipo1 = $oColuna["tipo1"][$i]),
+                    //     "tipo2" => ($tipo2 = $oColuna["tipo2"][$i]),
+                    //     "coluna1Text" => $oColuna["TEX1"][$i],
+                    //     "coluna2Text" => $oColuna["TEX2"][$i],
+                    // );
 
 
                     if ($tipo1 === "IMG") {
@@ -571,14 +571,13 @@ class AtividadeAction extends AtividadeActionParent {
                 throw new Exception("Resposta Errada!");
             }
         } else if ($tipo == "REL") {
-            $colunaA;
-            $colunaB;
+            $colunaA = null;
+            $colunaB = null;
             foreach ($dados as $oDado) {
                 $explode = explode('_', $oDado);
                 $colunaA[] = $explode[0];
                 $colunaB[] = $explode[1];
             }
-
             # Se for igual estão corretas, não é necessário verificar no banco
             if ($colunaA == $colunaB) {
                 return true;
