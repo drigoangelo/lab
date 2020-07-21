@@ -4,115 +4,30 @@ include_once(dirname(__FILE__) . '/../actionparent/AtividadeActionParent.php');
 
 class AtividadeAction extends AtividadeActionParent {
 
+    
+
     public function validate($request, $edicao = false) {
-//        Util::debug($request, false);
+        // Util::debug($request, false);
         # validação parent
         $validation = $this->validateParent($request, $edicao);
         if (!$validation) {
             return $validation;
         }
+
         #validação dos idiomas
         $oIdiomaAction = new IdiomaAction();
         $aIdSigla = $oIdiomaAction->getIdSigla(null, null, 'padrao ASC');
 
-        $id_ingles = $request->get('idiomaIngles');
-        if ($request->get("tipo") === "REL") { // aColuna somente para o tipo REL
-            $aColunaTmp = $_REQUEST["aColunaTmp"]; # $_REQUEST array para niveis
-            $aColunaTmpFiles = $_FILES["aColunaTmp"]; # $_REQUEST array para niveis para arquivos
-            $aColuna = array();
-            foreach ($aColunaTmp as $id_idioma => $oColuna) {
-                for ($i = 0; $i < count($oColuna["tipo1"]); $i++) {
-                    $aColuna[$id_idioma]["coluna"][$i] = array(
-                        "id" =>($oColuna["IMG1ID"][$i] ? $oColuna["IMG1ID"][$i] : 0),
-                        "Idioma" => $id_idioma,
-                        "coluna1" => $i + 1,
-                        "coluna2" => $i + 1,
-                        "tipo1" => ($tipo1 = $oColuna["tipo1"][$i]),
-                        "tipo2" => ($tipo2 = $oColuna["tipo2"][$i]),
-                        "coluna1Text" => $oColuna["TEX1"][$i],
-                        "coluna2Text" => $oColuna["TEX2"][$i],
-                    );
-                    # DUPLICAÇÃO PARA O INGLÊS
-                    // $aColuna[$id_ingles]["coluna"][$i] = array(
-                    //     "id" => ($oColuna["IMG2ID"][$i] ? $oColuna["IMG2ID"][$i] : 0),
-                    //     "Idioma" => $id_ingles,
-                    //     "coluna1" => $i + 1,
-                    //     "coluna2" => $i + 1,
-                    //     "tipo1" => ($tipo1 = $oColuna["tipo1"][$i]),
-                    //     "tipo2" => ($tipo2 = $oColuna["tipo2"][$i]),
-                    //     "coluna1Text" => $oColuna["TEX1"][$i],
-                    //     "coluna2Text" => $oColuna["TEX2"][$i],
-                    // );
-
-
-                    if ($tipo1 === "IMG") {
-                        $aArquivo1 = array(
-                            "id" => ($oColuna["IMG1ID"][$i] ? $oColuna["IMG1ID"][$i] : 0),
-                            "name" => $aColunaTmpFiles["name"][$id_idioma]["IMG1"][$i],
-                            "type" => $aColunaTmpFiles["type"][$id_idioma]["IMG1"][$i],
-                            "tmp_name" => $aColunaTmpFiles["tmp_name"][$id_idioma]["IMG1"][$i],
-                            "error" => $aColunaTmpFiles["error"][$id_idioma]["IMG1"][$i],
-                            "size" => $aColunaTmpFiles["size"][$id_idioma]["IMG1"][$i],
-                        );
-                        $this->validaImagem($aArquivo1, !$edicao);
-                        $aColuna[$id_idioma]["arquivo1"][$i] = $aArquivo1;
-                        $aColuna[$id_ingles]["arquivo1"][$i] = $aArquivo1;
-                    }
-                    if ($tipo2 === "IMG") {
-                        $aArquivo2 = array(
-                            "id" => ($oColuna["IMG2ID"][$i] ? $oColuna["IMG2ID"][$i] : 0),
-                            "name" => $aColunaTmpFiles["name"][$id_idioma]["IMG2"][$i],
-                            "type" => $aColunaTmpFiles["type"][$id_idioma]["IMG2"][$i],
-                            "tmp_name" => $aColunaTmpFiles["tmp_name"][$id_idioma]["IMG2"][$i],
-                            "error" => $aColunaTmpFiles["error"][$id_idioma]["IMG2"][$i],
-                            "size" => $aColunaTmpFiles["size"][$id_idioma]["IMG2"][$i],
-                        );
-                        $this->validaImagem($aArquivo2, !$edicao);
-                        $aColuna[$id_idioma]["arquivo2"][$i] = $aArquivo2;
-                        $aColuna[$id_ingles]["arquivo2"][$i] = $aArquivo2;
-                    }
-                    if ($tipo1 === "VID") {
-                        $aArquivo1 = array(
-                            "id" => ($oColuna["VID1ID"][$i] ? $oColuna["VID1ID"][$i] : 0),
-                            "name" => $aColunaTmpFiles["name"][$id_idioma]["VID1"][$i],
-                            "type" => $aColunaTmpFiles["type"][$id_idioma]["VID1"][$i],
-                            "tmp_name" => $aColunaTmpFiles["tmp_name"][$id_idioma]["VID1"][$i],
-                            "error" => $aColunaTmpFiles["error"][$id_idioma]["VID1"][$i],
-                            "size" => $aColunaTmpFiles["size"][$id_idioma]["VID1"][$i],
-                        );
-                        $this->validaVideo($aArquivo1, !$edicao);
-                        $aColuna[$id_idioma]["arquivo1"][$i] = $aArquivo1;
-                        $aColuna[$id_ingles]["arquivo1"][$i] = $aArquivo1;
-                    }
-                    if ($tipo2 === "VID") {
-                        $aArquivo2 = array(
-                            "id" => ($oColuna["VID2ID"][$i] ? $oColuna["VID2ID"][$i] : 0),
-                            "name" => $aColunaTmpFiles["name"][$id_idioma]["VID2"][$i],
-                            "type" => $aColunaTmpFiles["type"][$id_idioma]["VID2"][$i],
-                            "tmp_name" => $aColunaTmpFiles["tmp_name"][$id_idioma]["VID2"][$i],
-                            "error" => $aColunaTmpFiles["error"][$id_idioma]["VID2"][$i],
-                            "size" => $aColunaTmpFiles["size"][$id_idioma]["VID2"][$i],
-                        );
-                        $this->validaVideo($aArquivo2, !$edicao);
-                        $aColuna[$id_idioma]["arquivo2"][$i] = $aArquivo2;
-                        $aColuna[$id_ingles]["arquivo2"][$i] = $aArquivo2;
-                    }
-                }
+        //TODO VERIFICAR VALIDAÇÃO DE COLUNA
+        $aColunaTmp = $_REQUEST["aColunaTmp"]; # $_REQUEST array para niveis
+        foreach ($aColunaTmp as $id_idioma => $oColuna) {
+            # há um array de coluna estava aqui por isso adicionei ele na linha abaixo (Tarefa http://redmine.equilibriumweb.com/redmine/issues/2807)
+            if (count($oColuna['tipo1']) < 2) {
+                throw new Exception("Por favor, informe ao menos 2 colunas para esse tipo do idioma: " . $aIdSigla[$id_idioma]);
             }
-            foreach ($aColunaTmp as $id_idioma => $oColuna) {
-                # há um array de coluna estava aqui por isso adicionei ele na linha abaixo (Tarefa http://redmine.equilibriumweb.com/redmine/issues/2807)
-                if (count($aColuna[$id_idioma]['coluna']) < 2) {
-                    throw new Exception("Por favor, informe ao menos 2 colunas para esse tipo do idioma: " . $aIdSigla[$id_idioma]);
-                }
-            }
-            $request->set('aColuna', $aColuna);
-        } else {
-            $request->destroy('aColunaTmp');
-            $request->destroy('aColuna');
         }
-
-
-        $aTitulo = $request->get("aTitulo");
+        
+        $aTitulo = $request->get("aTitulo"); 
         $aDescricao = $request->get("aDescricao");
         foreach ($aTitulo as $nIdIdioma => $oTitulo) {
             if (!$oTitulo) {
@@ -126,7 +41,7 @@ class AtividadeAction extends AtividadeActionParent {
         }
 
         // validando ao menos uma correta para os tipos: 
-//        $tituloConteudo = $edicao ? $request->get('tituloConteudoEdit') : $request->get('tituloConteudo');
+        // $tituloConteudo = $edicao ? $request->get('tituloConteudoEdit') : $request->get('tituloConteudo');
         $tituloConteudo = array($request->get('titulo'));
         $tipoConteudo = array($request->get('tipo'));
         $aCorretas = array();
@@ -154,6 +69,84 @@ class AtividadeAction extends AtividadeActionParent {
         }
 
         return true;
+    }
+
+    protected function extractColumns($request, $edicao = false) {
+
+        if ($request->get("tipo") === "REL") { // aColuna somente para o tipo REL: Relacionar Colunas
+            $aColunaTmp = $_REQUEST["aColunaTmp"]; # $_REQUEST array para niveis
+            $aColunaTmpFiles = $_FILES["aColunaTmp"]; # $_REQUEST array para niveis para arquivos
+            $aColuna = array();
+            foreach ($aColunaTmp as $id_idioma => $oColuna) {
+                
+                for ($i = 0; $i < count($oColuna["tipo1"]); $i++) {
+                    $aColuna[$id_idioma]["coluna"][$i] = array(
+                        "id" => intval(($oColuna["id"][$i] ? $oColuna["id"][$i] : 0)),
+                        "Idioma" => $id_idioma,
+                        "coluna1" => $i + 1,
+                        "coluna2" => $i + 1,
+                        "tipo1" => ($tipo1 = $oColuna["tipo1"][$i]),
+                        "tipo2" => ($tipo2 = $oColuna["tipo2"][$i]),
+                        "coluna1Text" => $oColuna["TEX1"][$i],
+                        "coluna2Text" => $oColuna["TEX2"][$i],
+                    );
+                    
+                    if ($tipo1 === "IMG") {
+                        $aArquivo1 = array(
+                            "id" => ($oColuna["IMG1ID"][$i] ? $oColuna["IMG1ID"][$i] : 0),
+                            "name" => $aColunaTmpFiles["name"][$id_idioma]["IMG1"][$i],
+                            "type" => $aColunaTmpFiles["type"][$id_idioma]["IMG1"][$i],
+                            "tmp_name" => $aColunaTmpFiles["tmp_name"][$id_idioma]["IMG1"][$i],
+                            "error" => $aColunaTmpFiles["error"][$id_idioma]["IMG1"][$i],
+                            "size" => $aColunaTmpFiles["size"][$id_idioma]["IMG1"][$i],
+                        );
+                        $this->validaImagem($aArquivo1, !$edicao);
+                        $aColuna[$id_idioma]["arquivo1"][$i] = $aArquivo1;
+                    }
+                    if ($tipo2 === "IMG") {
+                        $aArquivo2 = array(
+                            "id" => ($oColuna["IMG2ID"][$i] ? $oColuna["IMG2ID"][$i] : 0),
+                            "name" => $aColunaTmpFiles["name"][$id_idioma]["IMG2"][$i],
+                            "type" => $aColunaTmpFiles["type"][$id_idioma]["IMG2"][$i],
+                            "tmp_name" => $aColunaTmpFiles["tmp_name"][$id_idioma]["IMG2"][$i],
+                            "error" => $aColunaTmpFiles["error"][$id_idioma]["IMG2"][$i],
+                            "size" => $aColunaTmpFiles["size"][$id_idioma]["IMG2"][$i],
+                        );
+                        $this->validaImagem($aArquivo2, !$edicao);
+                        $aColuna[$id_idioma]["arquivo2"][$i] = $aArquivo2;
+                    }
+                    if ($tipo1 === "VID") {
+                        $aArquivo1 = array(
+                            "id" => ($oColuna["VID1ID"][$i] ? $oColuna["VID1ID"][$i] : 0),
+                            "name" => $aColunaTmpFiles["name"][$id_idioma]["VID1"][$i],
+                            "type" => $aColunaTmpFiles["type"][$id_idioma]["VID1"][$i],
+                            "tmp_name" => $aColunaTmpFiles["tmp_name"][$id_idioma]["VID1"][$i],
+                            "error" => $aColunaTmpFiles["error"][$id_idioma]["VID1"][$i],
+                            "size" => $aColunaTmpFiles["size"][$id_idioma]["VID1"][$i],
+                        );
+                        $this->validaVideo($aArquivo1, !$edicao);
+                        $aColuna[$id_idioma]["arquivo1"][$i] = $aArquivo1;
+                    }
+                    if ($tipo2 === "VID") {
+                        $aArquivo2 = array(
+                            "id" => ($oColuna["VID2ID"][$i] ? $oColuna["VID2ID"][$i] : 0),
+                            "name" => $aColunaTmpFiles["name"][$id_idioma]["VID2"][$i],
+                            "type" => $aColunaTmpFiles["type"][$id_idioma]["VID2"][$i],
+                            "tmp_name" => $aColunaTmpFiles["tmp_name"][$id_idioma]["VID2"][$i],
+                            "error" => $aColunaTmpFiles["error"][$id_idioma]["VID2"][$i],
+                            "size" => $aColunaTmpFiles["size"][$id_idioma]["VID2"][$i],
+                        );
+                        $this->validaVideo($aArquivo2, !$edicao);
+                        $aColuna[$id_idioma]["arquivo2"][$i] = $aArquivo2;
+                    }
+                }
+            }
+            
+            $request->set('aColuna', $aColuna);
+        } else {
+            $request->destroy('aColunaTmp');
+            $request->destroy('aColuna');
+        }
     }
 
     protected function addTransaction($oAtividade, $request) {

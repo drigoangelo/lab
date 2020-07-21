@@ -1,4 +1,4 @@
-function AtividadeColunaSubmitHandler(botao, redirect)  {
+function AtividadeColunaSubmitHandler(botao, redirect) {
     var form = botao.form;
     var defaultValue = botao.value;
     var options = {
@@ -11,16 +11,16 @@ function AtividadeColunaSubmitHandler(botao, redirect)  {
         },
         success: function(serverResponse) {
             if (serverResponse == 'OK') {
-                if(redirect){
+                if (redirect) {
                     eqRedirectTimeout(URL_APP + MODULO_NAME + '/AtividadeColuna/admFilter?MESSAGE_TYPE=1&MESSAGE_CODE=1');
-                }else{
+                } else {
                     eqRedirectTimeout(eqGetCurrentUrl() + "?MESSAGE_TYPE=1&MESSAGE_CODE=1");
                 }
             } else {
                 eqMessage(eqYellow, serverResponse);
                 moveFocus(form);
             }
-            $(botao).attr('disabled',false).val(defaultValue);
+            $(botao).attr('disabled', false).val(defaultValue);
         },
         error: ajaxError,
         complete: ajaxComplete
@@ -28,7 +28,7 @@ function AtividadeColunaSubmitHandler(botao, redirect)  {
     $(form).ajaxSubmit(options);
 }
 
-function AtividadeColunaEditHandler(botao, redirect)  {
+function AtividadeColunaEditHandler(botao, redirect) {
     var form = botao.form;
     var defaultValue = botao.value;
     var options = {
@@ -40,17 +40,17 @@ function AtividadeColunaEditHandler(botao, redirect)  {
             return ajaxBeforeSend(botao);
         },
         success: function(serverResponse) {
-            if (serverResponse == 'OK' ) {
-                if(redirect){
+            if (serverResponse == 'OK') {
+                if (redirect) {
                     eqRedirectTimeout(URL_APP + MODULO_NAME + '/AtividadeColuna/admFilter?MESSAGE_TYPE=1&MESSAGE_CODE=2');
-                }else{
+                } else {
                     eqRedirectTimeout(eqGetCurrentUrl() + "?MESSAGE_TYPE=1&MESSAGE_CODE=2");
                 }
             } else {
                 eqMessage(eqYellow, serverResponse);
                 moveFocus(form);
             }
-            $(botao).attr('disabled',false).val(defaultValue);
+            $(botao).attr('disabled', false).val(defaultValue);
         },
         error: ajaxError,
         complete: ajaxComplete
@@ -59,6 +59,5 @@ function AtividadeColunaEditHandler(botao, redirect)  {
 }
 
 function AtividadeColunaDeleteHandler(action) {
-    eqDeleteDialog(action, URL_APP + MODULO_NAME + '/AtividadeColuna/admFilter?MESSAGE_TYPE=3&MESSAGE_CODE=3&page='+$('#__gen_currpage_del_handler__').val() + $('#__gen_order_del_handler__').val());
+    eqDeleteDialog(action, URL_APP + MODULO_NAME + '/AtividadeColuna/admFilter?MESSAGE_TYPE=3&MESSAGE_CODE=3&page=' + $('#__gen_currpage_del_handler__').val() + $('#__gen_order_del_handler__').val());
 }
-
