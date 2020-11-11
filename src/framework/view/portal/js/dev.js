@@ -89,19 +89,29 @@ function loginSubmit(botao) {
 function recuperaSenhaSubmit(botao) {
     var form = botao.form;
     $(form).serialize();
+    console.log(form);
     var options = {
         type: "POST",
         data: {
             "ajaxRequest": true
         },
-        beforeSubmit: function(formData, jqForm, options) {},
-        success: function(serverResponse, status) {
+        beforeSubmit: function (formData, jqForm, options) {
+            console.log(options);
+            $('#recoverModal').modal('hide');
+            $("#dialog-area").html('');
+        },
+        success: function (serverResponse) {
+            console.log('Entrou na parte de sucesso');
             if (serverResponse == 'OK') {
+                console.log('Entrou no ok');
                 $(".modal-body").html("As instruções de como recuperar a sua senha foram enviadas para o seu email.");
                 $(window.location).attr('href', URL_NOVA);
             } else {
 
-                $(".modal-body").html(serverResponse);
+                console.log('Entrou no else');
+                //$(".modal-body").html(serverResponse);
+                console.log('Chamou o modal com o serverResponse');
+                console.log(serverResponse);
             }
             $('#recaptcha_reload').click();
         },
@@ -212,7 +222,8 @@ function enviarRespostaAtividade(object, tipo, id) {
                 tipo: tipo,
                 id: id
             },
-            beforeSend: function() {},
+            beforeSend: function () {
+            },
             success: function(msg) {
                 if (msg == "OK") {
                     $(object).find('.img-resposta-ok').show();

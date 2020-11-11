@@ -147,7 +147,7 @@ class AtividadeController extends AtividadeControllerParent {
 
     public function gravacaoDownload() {
         $oAlunoAtividadeAction = new AlunoAtividadeAction();
-//        $id_aluno = (int) $this->request->get("id_aluno");
+        // $id_aluno = (int) $this->request->get("id_aluno");
         $id_atividade = (int) $this->request->get("id");
         $oAlunoAtividade = $oAlunoAtividadeAction->select(1, $id_atividade);
         if ($oAlunoAtividade === null) {

@@ -10,6 +10,7 @@ function AlunoAtividadeSubmitHandler(botao, redirect)  {
             return ajaxBeforeSend(botao);
         },
         success: function(serverResponse) {
+            alert(serverResponse);
             if (serverResponse == 'OK') {
                 if(redirect){
                     eqRedirectTimeout(URL_APP + MODULO_NAME + '/AlunoAtividade/admFilter?MESSAGE_TYPE=1&MESSAGE_CODE=1');

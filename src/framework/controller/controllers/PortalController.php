@@ -288,17 +288,20 @@ class PortalController {
         $dados = $this->request->get('dados');
         $tipo = $this->request->get('tipo');
         $id = $this->request->get('id');
+        
         $this->setAllFixo();
-
+        
         if (!$this->authPortal())
             return $this->view;
 
         $oAtividadeAction = new AtividadeAction();
         $oConteudoFormularioAction = new ConteudoFormularioAction();
+
         try {
             if ($tipo == 'MEI' || $tipo == 'MEV') {
                 $oConteudoFormularioAction->verificarResposta($dados, $id);
                 $oConteudoFormularioAction->saveResposta($dados, $id);
+                
             } else {
                 $oAtividadeAction->verificarResposta($dados, $tipo, $id);
                 $oAtividadeAction->saveResposta($dados, $tipo, $id);

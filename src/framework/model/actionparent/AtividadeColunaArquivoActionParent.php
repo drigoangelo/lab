@@ -90,10 +90,10 @@ if(isset($aFieldsStructure["tipo"]) && !isset($aFieldsStructure["tipo"]["isFk"])
         
         $oAtividadeColunaArquivo = new AtividadeColunaArquivo();
         $oAtividadeColunaArquivo->setAtividadeColuna(QueryHelper::verifyObject($AtividadeColuna, 'AtividadeColuna', $this->em));
-	$oAtividadeColunaArquivo->setColuna($coluna);
-	$oAtividadeColunaArquivo->setArquivo($arquivo);
-	$oAtividadeColunaArquivo->setNome($nome);
-	$oAtividadeColunaArquivo->setTipo($tipo);
+	    $oAtividadeColunaArquivo->setColuna($coluna);
+	    $oAtividadeColunaArquivo->setArquivo($arquivo);
+	    $oAtividadeColunaArquivo->setNome($nome);
+	    $oAtividadeColunaArquivo->setTipo($tipo);
 	
         try {
             if ($commitable) {
