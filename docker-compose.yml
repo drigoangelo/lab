@@ -18,21 +18,34 @@ services:
             - "8082:3306"
     
     webserver:
-        build: ./docker/lab-webserver/
+        build: 
+            context: ./docker/lab-webserver/
+            args: 
+                - DEBUG=${DEBUG}
+                - XDEBUG_HOST=${XDEBUG_HOST}
         container_name: lab-webserver
         hostname: lab-webserver
+        
         environment:
+            # Configuracao do banco de dados
             - MYSQL_HOST=${MYSQL_HOST}
             - MYSQL_PORT=${MYSQL_PORT}
             - MYSQL_DATABASE=${MYSQL_DATABASE}
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_CHARSET=${MYSQL_CHARSET}
+
+            # Configuracao SMTP
+            - EMAIL_USERNAME=${EMAIL_USERNAME}
+            - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+            - EMAIL_CHARSET=${EMAIL_CHARSET}
+            - EMAIL_PORTA=${EMAIL_PORTA}
+            - EMAIL_CRIPTOGRAFIA=${EMAIL_CRIPTOGRAFIA}
+            - SMTP_HOST=${SMTP_HOST}
         volumes:
             - ./src:/var/www/html/lab
             - ./docker/lab-webserver/facialRecognitionLogin:/home/html/facialRecognitionLogin
             - ./docker/lab-webserver/logs:/var/log/apache2
-
         ports:
             - "80:80"
         depends_on:
@@ -40,12 +53,12 @@ services:
         links:
             - mysql
 
-    # smtp:
-    #     image: gessnerfl/fake-smtp-server
-    #     container_name: lab-smtp
-    #     working_dir: /application
-    #     volumes:
-    #         - ./smtp:/application
-    #     ports:
-    #         - "5080:5080"
-    #         - "5081:5081"
+    smtp:
+        image: gessnerfl/fake-smtp-server
+        container_name: lab-smtp
+        working_dir: /application
+        volumes:
+            - ./smtp:/application
+        ports:
+            - "5080:5080"
+            - "5081:5081"

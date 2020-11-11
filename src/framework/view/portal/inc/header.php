@@ -55,14 +55,9 @@
     </div>
 </div>
 
-<!--<nav id="menu-principal">
-    <ul>
-        <li><a href="<?php echo URL ?>">Home</a></li>
-<li><a href="/contact">Contact</a></li>
-</ul>
-</nav>-->
 
-<?php if ($_REQUEST["error_message"]) { ?>
+
+<?php if (array_key_exists("error_message", $_REQUEST)) { ?>
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-12 text-center">
         <div class="mb-12" onclick="$(this).remove()">
             <div class="btn btn-outline-danger btn-lg">&times; <?php echo $_REQUEST["error_message"] ?></div>            

@@ -8,13 +8,23 @@ arquivo `src/bib/classes/settings/Config.php` variável `$isProducao`.
 * Para definir a senha do mysql, criar um arquivo chamado `.env` com as seguintes definições, substituindo a palavra senha pela respectiva senha, e alterando possíveis configurações locais.
 
 ```
-MYSQL_ROOT_PASSWORD=senha
-MYSQL_PASSWORD=senha
+MYSQL_ROOT_PASSWORD=senharoot
+MYSQL_PASSWORD=senhauser
 MYSQL_HOST=lab-mysql
 MYSQL_PORT=3306
 MYSQL_USER=lab2
 MYSQL_DATABASE=lab2
 MYSQL_CHARSET=utf8
+
+EMAIL_USERNAME=email
+EMAIL_PASSWORD=senha
+EMAIL_CHARSET=UTF-8
+EMAIL_PORTA=5025
+EMAIL_CRIPTOGRAFIA=
+SMTP_HOST=lab-smtp
+
+DEBUG=TRUE
+XDEBUG_HOST=host.docker.internal
 ```
 
 * Configuração de banco de dados e email:
