@@ -105,10 +105,11 @@ class ViewParent {
     public function redirectFriendlyView() {
         if (!is_object($this->response))
             $this->response = new Response();
-        $vURL = array();
-        foreach ($this->response->getParameters() as $var => $valor)
-            $vURL[] = "$var=" . urlencode($valor);
-        $url = (count($vURL) > 0) ? ("?" . join("&", $vURL)) : '';
+        // $vURL = array();
+        // foreach ($this->response->getParameters() as $var => $valor)
+        //     $vURL[] = "$var=" . urlencode($valor);
+        $vURL = http_build_query($this->response->getParameters());
+        $url = (strlen($vURL) > 0) ? ("?" . $vURL) : '';
         header("Location: {$this->name}$url");
         exit;
     }
