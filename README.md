@@ -55,7 +55,7 @@ Unix:
 mkdir -p docker/{lab-mysql/mysql,lab-webserver/{facialRecognitionLogin,logs}}
 ```
 
-* Após iniciar o sistema pela primeira vez, é necessário executar os scripts de inicialização do banco de dados. Esse script fará o INSERT dos dados necessários para que a aplicação funcione. Para executar esse script, seguir as orientações do [arquivo de inicizlização do banco de dados](db/data_backup/README.md).
+* Após iniciar o sistema pela primeira vez, é necessário executar os scripts de inicialização do banco de dados. Esse script fará o INSERT dos dados necessários para que a aplicação funcione. Para executar esse script, seguir as orientações do [arquivo de inicizlização do banco de dados](db/README.md).
 
 ---
 
@@ -74,5 +74,3 @@ Esse comando irá criar (caso necessário) e inicializar as imagens do apache e 
 * O banco de dados pode ser acessado no host `localhost`, porta `3306`, usuário `lab2` e senha definida no arquivo [.env](.env)
 
 ---
-
-teste git
