@@ -53,6 +53,22 @@ services:
         links:
             - mysql
 
+    deepspeech:
+        build: 
+            context: ./docker/lab-deepspeech/
+        container_name: lab-deepspeech
+        hostname: lab-deepspeech
+        
+        volumes:
+            - ./docker/lab-deepspeech/audio:/audio
+            - ./docker/lab-deepspeech/logs:/logs
+        ports:
+            - "8001:80"
+        depends_on:
+            - mysql
+        links:
+            - mysql
+
     smtp:
         image: gessnerfl/fake-smtp-server
         container_name: lab-smtp

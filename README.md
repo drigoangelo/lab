@@ -38,6 +38,8 @@ __IMPORTANTE__: O código foi alterado de forma a utilizar as variáveis de ambi
     - `docker/lab-mysql/mysql`: Diretório no qual serão salvos os arquivos da base de dados.
     - `docker/lab-webserver/facialRecognitionLogin`: Diretório usado para salvar imagens de reconhecimento facial para login.
     - `docker/lab-webserver/logs`. Diretório de logs do apache.
+    - `docker/lab-deepspeech/audio` Diretório de áudios para processamento do deepspeech
+    - `docker/lab-deepspeech/logs` Diretório de logs do deepspeech
 
 Essa estrutura pode ser criada executando os seguintes comandos:
 
@@ -47,12 +49,14 @@ Windows:
 mkdir docker\lab-mysql\mysql
 mkdir docker\lab-webserver\facialRecognitionLogin
 mkdir docker\lab-webserver\logs
+mkdir docker\lab-deepspeech\audio
+mkdir docker\lab-deepspeech\logs
 ```
 
 Unix:
 
 ```bash
-mkdir -p docker/{lab-mysql/mysql,lab-webserver/{facialRecognitionLogin,logs}}
+mkdir -p docker/{lab-mysql/mysql,lab-webserver/{facialRecognitionLogin,logs},lab-deepspeech/{audio,logs}}
 ```
 
 * Após iniciar o sistema pela primeira vez, é necessário executar os scripts de inicialização do banco de dados. Esse script fará o INSERT dos dados necessários para que a aplicação funcione. Para executar esse script, seguir as orientações do [arquivo de inicizlização do banco de dados](db/data_backup/README.md).

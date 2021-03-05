@@ -5,6 +5,8 @@ src/framework/view/portal/i18n/langcache
 docker/lab-mysql/mysql
 docker/lab-webserver/logs
 docker/lab-webserver/facialRecognitionLogin
+docker/lab-deepspeech/audio
+docker/lab-deepspeech/logs
 
 src/upload
 
